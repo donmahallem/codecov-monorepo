@@ -1,8 +1,8 @@
 /*!
  * Source https://github.com/donmahallem/codecov-monorepo
  */
-import { exec } from '@actions/exec';
 import { getInput } from '@actions/core';
+import { exec } from '@actions/exec';
 import axios from 'axios';
 import { promises as fsp } from 'fs';
 import { sync } from 'glob';
@@ -10,7 +10,7 @@ import { sync } from 'glob';
 const downloadBash = async (): Promise<void> => {
     const data: string = await (await axios('https://codecov.io/bash', { method: 'GET' })).data;
     await fsp.writeFile('./codecov', data);
-}
+};
 
 export const run = async (): Promise<void> => {
     await downloadBash();
