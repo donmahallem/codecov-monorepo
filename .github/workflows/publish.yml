@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - source
-      - master
+      - main
 
 jobs:
   publish_suite:
