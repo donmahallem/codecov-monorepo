@@ -46,6 +46,7 @@
     "dependencies": {
         "@actions/core": "~1.2.6",
         "@actions/exec": "~1.0.4",
+        "axios": "^0.21.1",
         "glob": "~7.1.6"
     },
     "files": [
