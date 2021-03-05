@@ -8746,7 +8746,10 @@ const run = async () => {
         projectPaths.push(...glob_1.sync(packagePath));
     }
     console.log('Paths found', projectPaths);
-    await exec_1.exec('./codecov', ['-t', core_1.getInput('token', { required: true }), '-f', 'kus']);
+    for (const projectPath of projectPaths) {
+        const packageName = projectPath.split('/')[1];
+        await exec_1.exec('./codecov', ['-t', core_1.getInput('token', { required: true }), '-f', packageName, '-s', projectPath]);
+    }
 };
 exports.run = run;
 
