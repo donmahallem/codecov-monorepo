@@ -25,6 +25,6 @@ export const run = async (): Promise<void> => {
     console.log('Paths found', projectPaths);
     for (const projectPath of projectPaths) {
         const packageName: string = projectPath.split('/')[1];
-        await exec('./codecov', ['-t', getInput('token', { required: true }), '-f', packageName, '-s', projectPath]);
+        await exec('bash', ['./codecov', '-t', getInput('token', { required: true }), '-f', packageName, '-s', projectPath]);
     }
 };
