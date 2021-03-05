@@ -8730,6 +8730,7 @@ exports.run = void 0;
  * Source https://github.com/donmahallem/codecov-monorepo
  */
 const exec_1 = __nccwpck_require__(1514);
+const core_1 = __nccwpck_require__(2186);
 const axios_1 = __importDefault(__nccwpck_require__(6545));
 const fs_1 = __nccwpck_require__(5747);
 const glob_1 = __nccwpck_require__(1957);
@@ -8745,7 +8746,7 @@ const run = async () => {
         projectPaths.push(...glob_1.sync(packagePath));
     }
     console.log('Paths found', projectPaths);
-    await exec_1.exec('./codecov', ['-f', 'kus']);
+    await exec_1.exec('./codecov', ['-t', core_1.getInput('token', { required: true }), '-f', 'kus']);
 };
 exports.run = run;
 
