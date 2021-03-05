@@ -23,5 +23,8 @@ export const run = async (): Promise<void> => {
         projectPaths.push(...sync(packagePath));
     }
     console.log('Paths found', projectPaths);
-    await exec('./codecov', ['-t', getInput('token', { required: true }), '-f', 'kus']);
+    for (const projectPath of projectPaths) {
+        const packageName: string = projectPath.split('/')[1];
+        await exec('./codecov', ['-t', getInput('token', { required: true }), '-f', packageName, '-s', projectPath]);
+    }
 };
