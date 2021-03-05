@@ -8748,7 +8748,7 @@ const run = async () => {
     console.log('Paths found', projectPaths);
     for (const projectPath of projectPaths) {
         const packageName = projectPath.split('/')[1];
-        await exec_1.exec('./codecov', ['-t', core_1.getInput('token', { required: true }), '-f', packageName, '-s', projectPath]);
+        await exec_1.exec('bash', ['./codecov', '-t', core_1.getInput('token', { required: true }), '-f', packageName, '-s', projectPath]);
     }
 };
 exports.run = run;
@@ -8773,6 +8773,7 @@ app_1.run()
 })
     .catch((err) => {
     core_1.error((err === null || err === void 0 ? void 0 : err.message) || 'Error occured');
+    core_1.setFailed((err === null || err === void 0 ? void 0 : err.message) || 'Error occured');
 });
 
 
