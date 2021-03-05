@@ -8748,7 +8748,7 @@ const run = async () => {
     console.log('Paths found', projectPaths);
     for (const projectPath of projectPaths) {
         const packageName = projectPath.split('/')[1];
-        await exec_1.exec('bash', ['./codecov', '-t', core_1.getInput('token', { required: true }), '-f', packageName, '-s', projectPath]);
+        await exec_1.exec('bash', ['./codecov', '-t', core_1.getInput('token', { required: true }), '-F', packageName, '-s', projectPath]);
     }
 };
 exports.run = run;
