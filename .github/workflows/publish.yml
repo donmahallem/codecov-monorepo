@@ -10,7 +10,7 @@ jobs:
     name: Publish
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.0
+        uses: actions/checkout@v2.3.4
         with:
           persist-credentials: false
       - name: Setup Node
