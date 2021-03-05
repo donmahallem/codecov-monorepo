@@ -4,3 +4,6 @@ author: 'donmahallem'
 runs:
   using: 'node14'
   main: 'index.js'
+branding:
+  icon: 'award'  
+  color: 'green'
