@@ -1,7 +1,7 @@
 /*!
  * Source https://github.com/donmahallem/codecov-monorepo
  */
-import { error, info } from '@actions/core';
+import { error, info, setFailed } from '@actions/core';
 import { run } from './app';
 
 run()
@@ -10,4 +10,5 @@ run()
     })
     .catch((err: any): void => {
         error(err?.message || 'Error occured');
+        setFailed(err?.message || 'Error occured');
     });
