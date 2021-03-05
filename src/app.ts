@@ -8,8 +8,8 @@ export const run = async (): Promise<void> => {
         packages: string[],
     } = JSON.parse(readFileSync('./lerna.json', 'utf8'));
     const projectPaths: string[] = [];
-    for (let packagePath of lernaPackage.packages) {
+    for (const packagePath of lernaPackage.packages) {
         projectPaths.push(...sync(packagePath));
     }
     console.log('Paths found', projectPaths);
-}
+};
