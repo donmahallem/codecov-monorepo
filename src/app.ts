@@ -6,7 +6,6 @@ import { exec } from '@actions/exec';
 import axios from 'axios';
 import { promises as fsp } from 'fs';
 import { sync } from 'glob';
-import { join } from 'path';
 
 const downloadBash = async (): Promise<void> => {
     const data: string = await (await axios('https://codecov.io/bash', { method: 'GET' })).data;
