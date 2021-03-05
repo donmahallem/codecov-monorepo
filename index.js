@@ -8734,6 +8734,7 @@ const exec_1 = __nccwpck_require__(1514);
 const axios_1 = __importDefault(__nccwpck_require__(6545));
 const fs_1 = __nccwpck_require__(5747);
 const glob_1 = __nccwpck_require__(1957);
+const path_1 = __nccwpck_require__(5622);
 const downloadBash = async () => {
     const data = await (await axios_1.default('https://codecov.io/bash', { method: 'GET' })).data;
     await fs_1.promises.writeFile('./codecov', data);
@@ -8745,8 +8746,18 @@ const run = async () => {
     for (const packagePath of lernaPackage.packages) {
         projectPaths.push(...glob_1.sync(packagePath));
     }
-    console.log('Paths found', projectPaths);
-    for (const projectPath of projectPaths) {
+    const filteredPaths = [];
+    for (const testPath of projectPaths) {
+        if (!(await fs_1.promises.lstat(testPath)).isDirectory()) {
+            continue;
+        }
+        if (glob_1.sync(path_1.join(testPath, '**/lcov.info')).length === 0) {
+            continue;
+        }
+        filteredPaths.push(testPath);
+    }
+    console.log('Paths found', filteredPaths);
+    for (const projectPath of filteredPaths) {
         const packageName = projectPath.split('/')[1];
         await exec_1.exec('bash', ['./codecov', '-t', core_1.getInput('token', { required: true }), '-F', packageName, '-s', projectPath]);
     }
