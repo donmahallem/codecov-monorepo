@@ -6,6 +6,7 @@ import { exec } from '@actions/exec';
 import axios from 'axios';
 import { promises as fsp } from 'fs';
 import { sync } from 'glob';
+import { join } from 'path';
 
 const downloadBash = async (): Promise<void> => {
     const data: string = await (await axios('https://codecov.io/bash', { method: 'GET' })).data;
@@ -22,8 +23,18 @@ export const run = async (): Promise<void> => {
     for (const packagePath of lernaPackage.packages) {
         projectPaths.push(...sync(packagePath));
     }
-    console.log('Paths found', projectPaths);
-    for (const projectPath of projectPaths) {
+    const filteredPaths: string[] = [];
+    for (const testPath of projectPaths) {
+        if (!(await fsp.lstat(testPath)).isDirectory()) {
+            continue;
+        }
+        if (sync(join(testPath, '**/lcov.info')).length === 0) {
+            continue;
+        }
+        filteredPaths.push(testPath);
+    }
+    console.log('Paths found', filteredPaths);
+    for (const projectPath of filteredPaths) {
         const packageName: string = projectPath.split('/')[1];
         await exec('bash', ['./codecov', '-t', getInput('token', { required: true }), '-F', packageName, '-s', projectPath]);
     }
