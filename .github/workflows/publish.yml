@@ -29,21 +29,21 @@ jobs:
           cp action.yml ./dist/action.yml
       - name: Deploy BETA Version
         if: github.ref == 'refs/heads/source'
-        uses: JamesIves/github-pages-deploy-action@4.0.0
+        uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: beta 
           FOLDER: dist 
       - name: Deploy RELEASE Version
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-        uses: JamesIves/github-pages-deploy-action@4.0.0
+        uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: release
           FOLDER: dist
       - name: Deploy Docs
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-        uses: JamesIves/github-pages-deploy-action@4.0.0
+        uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
