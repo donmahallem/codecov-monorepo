@@ -2,7 +2,7 @@ name: 'Codecov Monorepo'
 description: 'Uploads codecov reports with package flags'
 author: 'donmahallem'
 runs:
-  using: 'node14'
+  using: 'node12'
   main: 'index.js'
 branding:
   icon: 'award'  
