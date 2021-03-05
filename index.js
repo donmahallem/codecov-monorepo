@@ -8734,7 +8734,6 @@ const exec_1 = __nccwpck_require__(1514);
 const axios_1 = __importDefault(__nccwpck_require__(6545));
 const fs_1 = __nccwpck_require__(5747);
 const glob_1 = __nccwpck_require__(1957);
-const path_1 = __nccwpck_require__(5622);
 const downloadBash = async () => {
     const data = await (await axios_1.default('https://codecov.io/bash', { method: 'GET' })).data;
     await fs_1.promises.writeFile('./codecov', data);
@@ -8749,9 +8748,6 @@ const run = async () => {
     const filteredPaths = [];
     for (const testPath of projectPaths) {
         if (!(await fs_1.promises.lstat(testPath)).isDirectory()) {
-            continue;
-        }
-        if (glob_1.sync(path_1.join(testPath, '**/lcov.info')).length === 0) {
             continue;
         }
         filteredPaths.push(testPath);
