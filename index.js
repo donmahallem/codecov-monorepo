@@ -3783,7 +3783,7 @@ const glob_1 = __nccwpck_require__(957);
 const run = async () => {
     const lernaPackage = JSON.parse(fs_1.readFileSync('./lerna.json', 'utf8'));
     const projectPaths = [];
-    for (let packagePath of lernaPackage.packages) {
+    for (const packagePath of lernaPackage.packages) {
         projectPaths.push(...glob_1.sync(packagePath));
     }
     console.log('Paths found', projectPaths);
