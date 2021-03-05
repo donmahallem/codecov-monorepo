@@ -2,6 +2,7 @@
  * Source https://github.com/donmahallem/codecov-monorepo
  */
 import { exec } from '@actions/exec';
+import { getInput } from '@actions/core';
 import axios from 'axios';
 import { promises as fsp } from 'fs';
 import { sync } from 'glob';
@@ -22,5 +23,5 @@ export const run = async (): Promise<void> => {
         projectPaths.push(...sync(packagePath));
     }
     console.log('Paths found', projectPaths);
-    await exec('./codecov', ['-f', 'kus']);
+    await exec('./codecov', ['-t', getInput('token', { required: true }), '-f', 'kus']);
 };
