@@ -1,0 +1,50 @@
+name: Publish
+on:
+  push:
+    branches:
+      - source
+
+jobs:
+  publish_suite:
+    runs-on: ubuntu-latest
+    name: Publish
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.0
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: '14.x'
+      - name: Prepare Items
+        run: |
+          npm ci
+          npm run build
+          npm run docs
+      - name: Copy Action Files
+        run: |
+          cp README.md ./dist/README.md
+          cp LICENSE ./dist/LICENSE
+          cp action.yml ./dist/action.yml
+      - name: Deploy BETA Version
+        if: github.ref == 'refs/heads/source'
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: beta 
+          FOLDER: dist 
+      - name: Deploy RELEASE Version
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: release
+          FOLDER: dist
+      - name: Deploy Docs
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs

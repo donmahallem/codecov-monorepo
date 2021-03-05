@@ -1,0 +1,6 @@
+name: 'Codecov Monorepo'
+description: 'Uploads codecov reports with package flags'
+author: 'donmahallem'
+runs:
+  using: 'node14'
+  main: 'index.js'
