@@ -28,9 +28,6 @@ export const run = async (): Promise<void> => {
         if (!(await fsp.lstat(testPath)).isDirectory()) {
             continue;
         }
-        if (sync(join(testPath, '**/lcov.info')).length === 0) {
-            continue;
-        }
         filteredPaths.push(testPath);
     }
     console.log('Paths found', filteredPaths);
